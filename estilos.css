@@ -1,24 +1,43 @@
 /*Estilos especificos para la pagina web */
 
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;   /* 🔴 evita que aparezca scroll */
+}
+
 .tituloPrincipal {
     color: rgb(126, 13, 128);
     font-size: 50px;
 }
+.contenedor {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
 
 .imagenMano {
-    display: flex;
-    position: absolute;
-    left: 450px;
-    top: 80px;
+    position: fixed;    /* se queda fija al fondo */
+    top: 0;
+    left: 0;
+    width: 100vw;       /* ancho igual a la ventana */
+    height: 100vh;      /* alto igual a la ventana */
+    object-fit: cover;  /* rellena sin deformar */
+    z-index: -1;       /* detrás de todo */
 }
 
 .fondo {
-    display: flex;
-    position: absolute;
-    left: 400px;
-    top: 70px;
-    width: 850px;
-    height: 850px;
+    
+    position: fixed;    /* se queda fija al fondo */
+    top: 0;
+    left: 0;
+    width: 100vw;       /* ancho igual a la ventana */
+    height: 100vh;      /* alto igual a la ventana */
+    object-fit: cover;  /* rellena sin deformar */
+    z-index: -1;
 }
 
 .imagenColor {
