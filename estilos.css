@@ -11,6 +11,15 @@
     top: 80px;
 }
 
+.fondo{
+    display: flex;
+    position: absolute;
+    left: 400px;
+    top: 70px;
+    width: 850px;
+    height: 850px;
+}
+
 .imagenColor{
     margin-top: 10px;
     margin-left: 10px;

@@ -7,18 +7,32 @@
 
 <body> <!-- Cuerpo del documento -->
     <h1 class="tituloPrincipal"> Diseña tus propias uñas! </h1>
-    <picture >
+    <picture>
+        <img id="img1"
+            src="https://img.freepik.com/foto-gratis/fondo-papel-tapiz-colores-vividos-borrosos_58702-5904.jpg?semt=ais_incoming&w=740&q=80"
+            class="imagenColor"
+            onclick="moverImagenes('img1')"> <!-- Imagen -->
         <img id="img2"
+            src="https://static.vecteezy.com/system/resources/previews/006/971/429/non_2x/blue-single-color-background-smooth-color-blend-free-photo.jpg"
+            class="imagenColor"
+            onclick="moverImagenes('img2')"> <!-- Imagen --> </button>
+        <img id="img3"
             src="https://img.freepik.com/fotos-premium/fondo-rojo-abstracto-diseno-diseno-san-valentin-navidad-estudio-sala-plantilla-web-informe-comercial-color-degradado-circulo-suave_1258-681.jpg?semt=ais_hybrid&w=740&q=80"
-            class="imagenColor"> <!-- Imagen -->
-            <img id="img2"
+            class="imagenColor"
+            onclick="moverImagenes('img3')"> <!-- Imagen -->
+    </picture>
+    <img id="fondo"
             src="https://img.freepik.com/fotos-premium/fondo-rojo-abstracto-diseno-diseno-san-valentin-navidad-estudio-sala-plantilla-web-informe-comercial-color-degradado-circulo-suave_1258-681.jpg?semt=ais_hybrid&w=740&q=80"
-            class="imagenColor"> <!-- Imagen -->
-            <img id="img2"
-            src="https://img.freepik.com/fotos-premium/fondo-rojo-abstracto-diseno-diseno-san-valentin-navidad-estudio-sala-plantilla-web-informe-comercial-color-degradado-circulo-suave_1258-681.jpg?semt=ais_hybrid&w=740&q=80"
-            class="imagenColor"> <!-- Imagen -->
-        </picture>
-            <img id="img1" src="mano.jpg" class="imagenMano"> <!-- Imagen con alt -->
+            class="fondo"> <!-- Imagen -->
+    <img id="mano" src="mano3.webp" class="imagenMano"> <!-- Imagen con alt -->
+    <button onclick="moverImagenes()"> Mover Imagenes</button> <!-- Boton -->
+        <script>
+        function moverImagenes (idImagen) {
+            let img1 = document.getElementById("fondo");
+            let img2 = document.getElementById(idImagen);
+            img1.src = img2.src;
+        };
+    </script> <!-- Enlace a un archivo JavaScript externo -->
 </body>
 
 </html>
