@@ -7,6 +7,12 @@
 
 <body> <!-- Cuerpo del documento -->
     <h1 class="tituloPrincipal"> Diseña tus propias uñas! </h1>
+    <div class="contenedor"> <!-- Contenedor de las imagenes -->
+        <img id="fondo"
+            src="https://img.freepik.com/fotos-premium/fondo-rojo-abstracto-diseno-diseno-san-valentin-navidad-estudio-sala-plantilla-web-informe-comercial-color-degradado-circulo-suave_1258-681.jpg?semt=ais_hybrid&w=740&q=80"
+            class="fondo"> <!-- Imagen -->
+        <img id="mano" src="mano3.webp" class="imagenMano"> <!-- Imagen con alt -->
+    </div>
     <picture>
         <img id="img1"
             src="https://img.freepik.com/foto-gratis/fondo-papel-tapiz-colores-vividos-borrosos_58702-5904.jpg?semt=ais_incoming&w=740&q=80"
@@ -21,10 +27,6 @@
             class="imagenColor"
             onclick="moverImagenes('img3')"> <!-- Imagen -->
     </picture>
-    <img id="fondo"
-            src="https://img.freepik.com/fotos-premium/fondo-rojo-abstracto-diseno-diseno-san-valentin-navidad-estudio-sala-plantilla-web-informe-comercial-color-degradado-circulo-suave_1258-681.jpg?semt=ais_hybrid&w=740&q=80"
-            class="fondo"> <!-- Imagen -->
-    <img id="mano" src="mano3.webp" class="imagenMano"> <!-- Imagen con alt -->
     <button onclick="moverImagenes()"> Mover Imagenes</button> <!-- Boton -->
         <script>
         function moverImagenes (idImagen) {

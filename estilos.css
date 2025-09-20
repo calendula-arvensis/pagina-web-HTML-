@@ -5,6 +5,13 @@
     font-size: 50px;
 }
 
+.contenedor {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
 .imagenMano {
     display: flex;
     position: absolute;
