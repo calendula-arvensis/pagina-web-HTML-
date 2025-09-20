@@ -1,17 +1,18 @@
 /*Estilos especificos para la pagina web */
 
-.tituloPrincipal{
+.tituloPrincipal {
     color: rgb(126, 13, 128);
     font-size: 50px;
 }
-.imagenMano{
+
+.imagenMano {
     display: flex;
     position: absolute;
     left: 450px;
     top: 80px;
 }
 
-.fondo{
+.fondo {
     display: flex;
     position: absolute;
     left: 400px;
@@ -20,10 +21,20 @@
     height: 850px;
 }
 
-.imagenColor{
+.imagenColor {
     margin-top: 10px;
     margin-left: 10px;
+    /*margin: 10px;*/
     border-radius: 50%;
     width: 50px;
     height: 50px;
+    object-fit: cover; /* recorta la imagen sin deformarla */
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: transform 0.3s, border 0.3s;/* animaciones suaves */
+}
+
+.imagenColor:hover {
+    transform: scale(1.1);/* agranda la miniatura */
+    border: 3px solid #d63384; /* resalta con un borde de color */
 }
