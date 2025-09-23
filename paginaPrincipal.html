@@ -31,10 +31,12 @@
                 src="https://img.freepik.com/fotos-premium/fondo-rojo-abstracto-diseno-diseno-san-valentin-navidad-estudio-sala-plantilla-web-informe-comercial-color-degradado-circulo-suave_1258-681.jpg?semt=ais_hybrid&w=740&q=80"
                 class="fondo">
 
-            <img id="mano" src="fondo-mesa-manicura.png" class="imagenMano">
+            <img id="mano" alt="Imagen dinamica" class="imagenMano">
         </div>
-    </div>
 
+        <button onClick="cambiarMano(0,0)" > redondas largo1 </button>
+        <button onClick="cambiarMano(1,0)" > cuadradas largo1 </button>
+    </div>
     <script>
         function moverImagenes(idImagen) {
             let fondo = document.getElementById("fondo");
@@ -45,6 +47,24 @@
                 fondo.style.opacity = 1;
             }, 300);
         }
+    </script>
+
+    <script>
+        let formasYLargos; 
+        function inicializarMatrizMano(){
+            formasYLargos = new Array(2);
+            formasYLargos[0] = new Array("fondo-mesa-manicura/redondas/largo1.png");
+            formasYLargos[1] = new Array("fondo-mesa-manicura/cuadradas/largo1.png");
+        }
+
+        function cambiarMano(nroForma, nroLargo){
+            fondo =document.getElementById("mano"); 
+            fondo.src = formasYLargos[nroForma][nroLargo]; 
+        }
+
+        //inicializar la matriz con los largos y formas 
+        inicializarMatrizMano(); 
+        cambiarMano(0,0);
     </script>
 </body>
 </html>
