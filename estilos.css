@@ -21,9 +21,8 @@ html, body {
 /* ===== LAYOUT PRINCIPAL ===== */
 .layout {
     display: flex;
-    justify-content: center;
+    justify-content:space-evenly;
     align-items: flex-start;
-    gap: 40px;
 }
 
 /* ===== MINIATURAS (picture) ===== */
@@ -120,4 +119,8 @@ th, td{
     font-size: 120%;
     font-weight: 500;
     top: -4px; 
+}
+
+.tablaFormas{
+    border:#cf0872;
 }

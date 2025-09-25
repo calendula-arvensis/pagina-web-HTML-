@@ -33,32 +33,51 @@
                 class="imagenColor"
                 onclick="moverImagenes('img5')">
             
+            <img id="img6"
+                src="https://img.freepik.com/fotos-premium/fondo-azul-copos-nieve-el_1282603-84.jpg?semt=ais_hybrid&w=740&q=80"
+                class="imagenColor"
+                onclick="moverImagenes('img6')">
         </picture>
 
         <!-- Columna derecha: mano y fondo -->
         <div class="contenedor">
             <img id="fondo"
-                src="https://img.freepik.com/fotos-premium/fondo-rojo-abstracto-diseno-diseno-san-valentin-navidad-estudio-sala-plantilla-web-informe-comercial-color-degradado-circulo-suave_1258-681.jpg?semt=ais_hybrid&w=740&q=80"
+                src="https://images-ext-1.discordapp.net/external/4hw6z4JvhIpaLXqrZYKb5uWH_ZPD6sXKtyQgwz9y8YA/%3Fq%3Dtbn%3AANd9GcRQrephGiUfNcRkBeyB9R10_Qya5Jl99Iqe_w%26s/https/encrypted-tbn0.gstatic.com/images?format=webp&width=293&height=293"
                 class="fondo">
 
             <img id="mano" alt="Imagen dinamica" class="imagenMano">
         </div>
-        <table>
+        <table class="tablaFormas">
             <tr>
-                <th> Redondas </th>
+                <th> Almendradas </th>
                 <th> Cuadradas </th>
+                <th> Puntiagudas</th>
             </tr>
             <tr>
-                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(0,0)" ><span class="heart-text "> 1</span> </button> </td>
-                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,0)" ><span class="heart-text "> 1</span> </button> </td>
+                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(0,0)" ><span class="heart-text "> 1? </span> </button> </td>
+                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,0)" ><span class="heart-text "> 1? </span> </button> </td>
+                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,0)" ><span class="heart-text "> 1? </span> </button> </td>
             </tr>
             <tr>
-                <td> largo 2</td>
-                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,1)" ><span class="heart-text "> 2 </span> </button> </td>
+                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,1)" ><span class="heart-text "> 2? </span> </button> </td>
+                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,1)" ><span class="heart-text "> 2? </span> </button> </td>
+                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,1)" ><span class="heart-text "> 2? </span> </button> </td>
+            </tr> 
+            <tr>
+                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,1)" ><span class="heart-text "> 3? </span> </button> </td>
+                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,1)" ><span class="heart-text "> 3? </span> </button> </td>
+                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,1)" ><span class="heart-text "> 3? </span> </button> </td>
             </tr>
         </table>
         
     </div>
+
+    <footer style="margin-top: 2em;">
+            <p>&copy; 2025 - Nuestra App html -
+                <a href="https://www.eniun.com/botones-css-estilos/"> Conocenos! </a>
+            </p>
+            
+        </footer>
     <script>
         function moverImagenes(idImagen) {
             let fondo = document.getElementById("fondo");
