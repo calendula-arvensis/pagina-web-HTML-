@@ -23,6 +23,11 @@
                 src="https://img.freepik.com/fotos-premium/fondo-rojo-abstracto-diseno-diseno-san-valentin-navidad-estudio-sala-plantilla-web-informe-comercial-color-degradado-circulo-suave_1258-681.jpg?semt=ais_hybrid&w=740&q=80"
                 class="imagenColor"
                 onclick="moverImagenes('img3')">
+
+            <img id="img4"
+                src="https://img.freepik.com/vector-gratis/fondo-abstracto-rosa_698452-1663.jpg?semt=ais_hybrid&w=740&q=80"
+                class="imagenColor"
+                onclick="moverImagenes('img4')">
         </picture>
 
         <!-- Columna derecha: mano y fondo -->
@@ -36,6 +41,7 @@
 
         <button onClick="cambiarMano(0,0)" > redondas largo1 </button>
         <button onClick="cambiarMano(1,0)" > cuadradas largo1 </button>
+        <button onClick="cambiarMano(1,1)" > cuadradas largo2 </button>
     </div>
     <script>
         function moverImagenes(idImagen) {
@@ -54,7 +60,7 @@
         function inicializarMatrizMano(){
             formasYLargos = new Array(2);
             formasYLargos[0] = new Array("fondo-mesa-manicura/redondas/largo1.png");
-            formasYLargos[1] = new Array("fondo-mesa-manicura/cuadradas/largo1.png");
+            formasYLargos[1] = new Array("fondo-mesa-manicura/cuadradas/largo1.png", "fondo-mesa-manicura/cuadradas/largo2.png");
         }
 
         function cambiarMano(nroForma, nroLargo){
