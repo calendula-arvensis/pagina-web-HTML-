@@ -79,3 +79,45 @@ picture {
 .imagenMano:hover {
     transform: scale(1.02);
 }
+
+.botonFormas{
+    border: none;
+    color: white; 
+    padding: 14px 28px; 
+    cursor: pointer; 
+    border-radius: 5px;
+    background-color: #cf0872; 
+    transition: filter 0.2s, transform 0.3s ease-in-out; 
+}
+
+.heart-pulse-effect:hover {
+    background: none;
+    filter:brightness(1.2);
+    transform: scale(1.1);
+}
+
+.heart-pulse-effect:active{
+    background: none;
+    transform: scale(0.9);
+}
+
+th, td{
+    padding: 10px;
+    text-align: center;
+}
+
+.heart {
+  --c: #cf0872;
+  width: 65px;
+  aspect-ratio: 1;
+  border-image: radial-gradient(var(--c) 69%,#0000 70%) 84.5%/50%;
+  clip-path: polygon(-42% 0,50% 91%, 142% 0);
+}
+
+.heart-text{
+    position:relative; 
+    color:white;
+    font-size: 120%;
+    font-weight: 500;
+    top: -4px; 
+}

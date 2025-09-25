@@ -25,9 +25,14 @@
                 onclick="moverImagenes('img3')">
 
             <img id="img4"
-                src="https://img.freepik.com/vector-gratis/fondo-abstracto-rosa_698452-1663.jpg?semt=ais_hybrid&w=740&q=80"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrijuE-_K6OKc3MlVV0_qLIpCUCkvG2wQwQg&s"
                 class="imagenColor"
                 onclick="moverImagenes('img4')">
+            <img id="img5"g
+                src="fondo-mesa-manicura/biFlag.jpeg"
+                class="imagenColor"
+                onclick="moverImagenes('img5')">
+            
         </picture>
 
         <!-- Columna derecha: mano y fondo -->
@@ -38,10 +43,21 @@
 
             <img id="mano" alt="Imagen dinamica" class="imagenMano">
         </div>
-
-        <button onClick="cambiarMano(0,0)" > redondas largo1 </button>
-        <button onClick="cambiarMano(1,0)" > cuadradas largo1 </button>
-        <button onClick="cambiarMano(1,1)" > cuadradas largo2 </button>
+        <table>
+            <tr>
+                <th> Redondas </th>
+                <th> Cuadradas </th>
+            </tr>
+            <tr>
+                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(0,0)" ><span class="heart-text "> 1</span> </button> </td>
+                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,0)" ><span class="heart-text "> 1</span> </button> </td>
+            </tr>
+            <tr>
+                <td> largo 2</td>
+                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,1)" ><span class="heart-text "> 2 </span> </button> </td>
+            </tr>
+        </table>
+        
     </div>
     <script>
         function moverImagenes(idImagen) {
