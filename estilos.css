@@ -16,6 +16,9 @@ html, body {
     color: rgb(116, 0, 44);
     font-size: 50px;
     margin-bottom: 30px;
+    font-family: "Delius Swash Caps", cursive;
+    font-weight: 600;
+    font-style: normal;
 }
 
 /* ===== LAYOUT PRINCIPAL ===== */
@@ -103,6 +106,9 @@ picture {
 th, td{
     padding: 10px;
     text-align: center;
+    font-family: "Delius Swash Caps", cursive;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .heart {
@@ -123,4 +129,37 @@ th, td{
 
 .tablaFormas{
     border:#cf0872;
+}
+
+.footer{
+    position: fixed;
+    width: 100%;
+    bottom: 0%;
+    left: 0;
+    background: #cf0872;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.footer p{
+    color: white;
+    font-size: 16px;
+    font-family: "Delius Swash Caps", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.link-blanco{
+    color: white;
+}
+
+.conocenos-texto{
+    color: rgb(5, 5, 5);
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-family: "Delius Swash Caps", cursive;
+    font-weight: 400;
+    font-style: normal;
 }
