@@ -61,6 +61,16 @@ picture {
     box-shadow: 0 8px 25px rgba(0,0,0,0.2);
 }
 
+.contenedor-conocenos{
+    display: flex;           /* activa flexbox */
+    justify-content: center; /* centra las imágenes */
+    gap: 15px;        /* espacio entre imágenes */
+}
+
+.contenedor-conocenos img {
+  width: 200px;
+}
+
 .fondo {
     width: 100%;
     height: 100%;
