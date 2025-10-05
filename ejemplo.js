@@ -4,17 +4,15 @@ const cadena = "hola mundo!";
 let miComidaPreferida = "Milanesa"; //Puede cambiar 
 miComidaPreferida = "Pancho"
 
-const misComidas = {}
-
-comidas; [ {
-    titulo: "pancho"
-    imagen: "https://..."
-},
-{
-    titulo: 
-}
-
-]
+const misComidas = [
+    {
+        titulo: "pancho"
+        //imagen: "https://..."
+    },
+    {
+        titulo: ""
+    }
+];
 
 //instalar "Node" para ejecutar
 if (miNumero > 3) {
