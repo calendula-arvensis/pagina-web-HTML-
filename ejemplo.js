@@ -14,7 +14,7 @@ const misComidas = [
     }
 ];
 
-//instalar "Node" para ejecutar
+//instalar  "Node" para ejecutar
 if (miNumero > 3) {
     //..
     console.log("es mayor");
