@@ -28,27 +28,16 @@ html, body {
     align-items: flex-start;
 }
 
-/* ===== MINIATURAS (picture) ===== */
-picture {
-    display: flex;
-    flex-direction: column; /* columna vertical */
-    gap: 10px;
-    margin-top: 50px;
-}
-
-/* Reemplazar selector picture por .paleta y agregar scroll vertical */
+/* ===== PALETA DE MINIATURAS ===== */
 .paleta {
   display: flex;
-  flex-direction: column;  /* columna vertical */
+  flex-direction: column;
   gap: 10px;
   margin-top: 55px;
   padding: 6px;
-  overflow: visible;
-
-  /* para permitir más colores con scroll propio */
-  height: 480px;       /* ajustá según tu diseño */
-  overflow-y: auto;      /* un poco de aire para la barra */
-
+  height: 400px;     /* ~5 miniaturas visibles */
+  overflow-y: auto;  /* scroll vertical dentro de la paleta */
+  overflow-x: hidden;
 }
 
 /* (opcional) estilito para que no “salte” el layout cuando aparece la barra */

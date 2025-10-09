@@ -4,14 +4,20 @@
     <link rel="stylesheet" href="estilos.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap" rel="stylesheet"></head>
-<body>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap" rel="stylesheet">
+    
+    <script src="script.js" defer></script>
+</head>
+
+    <body>
     <h1 class="tituloPrincipal">¡Diseña tus propias uñas!</h1>
+
 
     <div class="layout">
         <!-- Columna izquierda: miniaturas dentro de picture -->
-        <div class="paleta">   
-            <!-- Cambiar a arreglo con javascript -->
+     <div class="paleta"> 
+<!--            
             <img id="img1"
                 src="https://img.freepik.com/foto-gratis/fondo-papel-tapiz-colores-vividos-borrosos_58702-5904.jpg?semt=ais_incoming&w=740&q=80"
                 class="imagenColor"
@@ -40,7 +46,7 @@
                 src="https://img.freepik.com/fotos-premium/fondo-azul-copos-nieve-el_1282603-84.jpg?semt=ais_hybrid&w=740&q=80"
                 class="imagenColor"
                 onclick="moverImagenes('img6')">
-        </div>
+        --> </div>  <!-- fin paleta -->
 
         <!-- Columna derecha: mano y fondo -->
         <div class="contenedor">
@@ -82,7 +88,7 @@
             </p>            
     </footer>
 
-    <script>
+    <!-- <script>
         function moverImagenes(idImagen) {
             let fondo = document.getElementById("fondo");
             let color = document.getElementById(idImagen);
@@ -92,9 +98,9 @@
                 fondo.style.opacity = 1;
             }, 300);
         }
-    </script>
+    </script> -->
 
-    <script>
+    <!-- <script>
         let formasYLargos; 
         function inicializarMatrizMano(){
             formasYLargos = new Array(3);
@@ -111,6 +117,6 @@
         //inicializar la matriz con los largos y formas 
         inicializarMatrizMano(); 
         cambiarMano(0,0);
-    </script>
+    </script> -->
 </body>
 </html>
