@@ -70,4 +70,18 @@
   window.addEventListener('DOMContentLoaded', () => {
     window.cambiarMano(0, 0);
   });
+
+  // Botón de reset
+const btnReset = document.getElementById('btnReset');
+btnReset.addEventListener('click', () => {
+  // Restaurar el color de fondo al inicial
+  fondo.style.opacity = 0;
+  setTimeout(() => {
+    fondo.src = 'https://images-ext-1.discordapp.net/external/4hw6z4JvhIpaLXqrZYKb5uWH_ZPD6sXKtyQgwz9y8YA/%3Fq%3Dtbn%3AANd9GcRQrephGiUfNcRkBeyB9R10_Qya5Jl99Iqe_w%26s/https/encrypted-tbn0.gstatic.com/images?format=webp&width=293&height=293';
+    fondo.style.opacity = 1;
+  }, 300);
+
+  // Restaurar la mano a la opción inicial (0, 0)
+  cambiarMano(0, 0);
+});
 })();
