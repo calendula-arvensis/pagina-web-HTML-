@@ -3,8 +3,8 @@
   const fondo = document.getElementById('fondo');
   const mano = document.getElementById('mano');
 
-  // Cargar colores desde el archivo JSON ---
-  fetch('./colores.json')
+  // Cargar colores desde el archivo JSON 
+  fetch('./colores.json') // Promesa
     .then(res => {
       if (!res.ok) throw new Error('No se pudo cargar colores.json');
       return res.json();
@@ -71,7 +71,7 @@
     window.cambiarMano(0, 0);
   });
 
-  // Botón de reset
+  // Botón de reset, sin setTimeout y con async y await?
 const btnReset = document.getElementById('btnReset');
 btnReset.addEventListener('click', () => {
   // Restaurar el color de fondo al inicial
