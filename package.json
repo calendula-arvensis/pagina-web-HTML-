@@ -1,0 +1,23 @@
+{
+  "name": "pagina-web-html-",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ejemplo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calendula-arvensis/pagina-web-HTML-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/calendula-arvensis/pagina-web-HTML-/issues"
+  },
+  "homepage": "https://github.com/calendula-arvensis/pagina-web-HTML-#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
