@@ -1,0 +1,40 @@
+{ "colores": [
+
+    {
+        "id": "img1",
+        "src": "colores/img1.jpg"
+    },
+    {
+        "id": "img2",
+        "src": "colores/img2.jpg"
+    },
+    {
+        "id": "img3",
+        "src": "colores/img3.jpg"
+    },
+    {
+        "id": "img4",
+        "src": "colores/biFlag.jpeg"
+    },
+    {
+        "id": "img5",
+        "src": "colores/img5.jpeg"
+    },
+    {
+        "id": "img6",
+        "src": "colores/img6.jpg"
+    },
+    {
+        "id": "img7",
+        "src": "colores/img7.jpg"
+    },
+    {
+        "id": "img8",
+        "src": "colores/img8.jpg"
+    },
+    {
+        "id": "img9",
+        "src": "colores/img9.jpg"
+    }
+]
+}
