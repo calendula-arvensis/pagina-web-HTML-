@@ -3,126 +3,60 @@
     <title>Manicuras Divinas</title>
     <link rel="stylesheet" href="estilos.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    
+    <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap" rel="stylesheet">    
     <script src="script.js" defer></script>
 </head>
 
-    <body>
+<body>
     <h1 class="tituloPrincipal">¡Diseña tus propias uñas!</h1>
-
-
     <div class="layout">
-        <!-- Columna izquierda: miniaturas dentro de picture -->
-     <div class="paleta"> 
-<!--            
-            <img id="img1"
-                src="https://img.freepik.com/foto-gratis/fondo-papel-tapiz-colores-vividos-borrosos_58702-5904.jpg?semt=ais_incoming&w=740&q=80"
-                class="imagenColor"
-                onclick="moverImagenes('img1')">
+        <!-- Columna izquierda: paleta de colores -->
+        <div class="paleta"> </div>  
 
-            <img id="img2"
-                src="https://static.vecteezy.com/system/resources/previews/006/971/429/non_2x/blue-single-color-background-smooth-color-blend-free-photo.jpg"
-                class="imagenColor"
-                onclick="moverImagenes('img2')">
-
-            <img id="img3"
-                src="https://img.freepik.com/fotos-premium/fondo-rojo-abstracto-diseno-diseno-san-valentin-navidad-estudio-sala-plantilla-web-informe-comercial-color-degradado-circulo-suave_1258-681.jpg?semt=ais_hybrid&w=740&q=80"
-                class="imagenColor"
-                onclick="moverImagenes('img3')">
-
-            <img id="img4"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrijuE-_K6OKc3MlVV0_qLIpCUCkvG2wQwQg&s"
-                class="imagenColor"
-                onclick="moverImagenes('img4')">
-            <img id="img5"
-                src="fondo-mesa-manicura/biFlag.jpeg"
-                class="imagenColor"
-                onclick="moverImagenes('img5')">
-            
-            <img id="img6"
-                src="https://img.freepik.com/fotos-premium/fondo-azul-copos-nieve-el_1282603-84.jpg?semt=ais_hybrid&w=740&q=80"
-                class="imagenColor"
-                onclick="moverImagenes('img6')">
-        --> </div>  <!-- fin paleta -->
-
-        <!-- Columna derecha: mano y fondo -->
+        <!-- Columna central: mano y fondo -->
         <div class="contenedor">
             <img id="fondo"
-                src="https://images-ext-1.discordapp.net/external/4hw6z4JvhIpaLXqrZYKb5uWH_ZPD6sXKtyQgwz9y8YA/%3Fq%3Dtbn%3AANd9GcRQrephGiUfNcRkBeyB9R10_Qya5Jl99Iqe_w%26s/https/encrypted-tbn0.gstatic.com/images?format=webp&width=293&height=293"
-                class="fondo">
-
+            src="https://images-ext-1.discordapp.net/external/4hw6z4JvhIpaLXqrZYKb5uWH_ZPD6sXKtyQgwz9y8YA/%3Fq%3Dtbn%3AANd9GcRQrephGiUfNcRkBeyB9R10_Qya5Jl99Iqe_w%26s/https/encrypted-tbn0.gstatic.com/images?format=webp&width=293&height=293"
+            class="fondo">
             <img id="mano" alt="Imagen dinamica" class="imagenMano">
         </div>
+        <!-- Columna derecha: formas, largos y botón de reset -->
         <div class="columnaDerecha">
-        <table class="tablaFormas">
-            <tr>
-                <th> Almendradas </th>
-                <th> Cuadradas </th>
-                <th> Puntiagudas</th>
-            </tr>
-            <tr>
-                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(0,0)" ><span class="heart-text "> 1 </span> </button> </td>
-                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,0)" ><span class="heart-text "> 1 </span> </button> </td>
-                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(2,0)" ><span class="heart-text "> 1 </span> </button> </td>
-            </tr>
-            <tr>
-                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(0,1)" ><span class="heart-text "> 2 </span> </button> </td>
-                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,1)" ><span class="heart-text "> 2 </span> </button> </td>
-                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(2,1)" ><span class="heart-text "> 2 </span> </button> </td>
-            </tr> 
-            <tr>
-                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(0,2)" ><span class="heart-text "> 3 </span> </button> </td>
-                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,2)" ><span class="heart-text "> 3 </span> </button> </td>
-                <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(2,2)" ><span class="heart-text "> 3 </span> </button> </td>
-            </tr>
-        </table>
-        <div class="botonReset">
-            <button id="btnReset" class="botonFormas"> Resetear diseño</button>
+            <table class="tablaFormas">
+                <tr>
+                    <th> Almendradas </th>
+                    <th> Cuadradas </th>
+                    <th> Puntiagudas</th>
+                </tr>
+                <tr>
+                    <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(0,0)" ><span class="heart-text "> 1 </span> </button> </td>
+                    <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,0)" ><span class="heart-text "> 1 </span> </button> </td>
+                    <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(2,0)" ><span class="heart-text "> 1 </span> </button> </td>
+                </tr>
+                <tr>
+                    <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(0,1)" ><span class="heart-text "> 2 </span> </button> </td>
+                    <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,1)" ><span class="heart-text "> 2 </span> </button> </td>
+                    <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(2,1)" ><span class="heart-text "> 2 </span> </button> </td>
+                </tr> 
+                <tr>
+                    <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(0,2)" ><span class="heart-text "> 3 </span> </button> </td>
+                    <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(1,2)" ><span class="heart-text "> 3 </span> </button> </td>
+                    <td> <button class='heart heart-pulse-effect' onClick="cambiarMano(2,2)" ><span class="heart-text "> 3 </span> </button> </td>
+                </tr>
+            </table>
+            <div class="botonReset">
+                <button id="btnReset" class="botonFormas"> Resetear diseño</button>
+            </div>
         </div>
-        </div>
-        
     </div>
 
-
     <footer class="footer">
-            <p class="footer p">&copy; 2025 - Nuestra App html -  
-                <a href="conocenos.html" class="link-blanco" target="_blank"> Conocenos! </a> - 
-                <a href="https://es.wikihow.com/cuidar-las-u%C3%B1as" class="link-blanco" target="_blank"> Cuidados
-            </p>            
+        <p class="footer p">&copy; 2025 - Nuestra App html -  
+            <a href="conocenos.html" class="link-blanco" target="_blank"> Conocenos! </a> - 
+            <a href="https://es.wikihow.com/cuidar-las-u%C3%B1as" class="link-blanco" target="_blank"> Cuidados
+        </p>            
     </footer>
-
-    <!-- <script>
-        function moverImagenes(idImagen) {
-            let fondo = document.getElementById("fondo");
-            let color = document.getElementById(idImagen);
-            fondo.style.opacity = 0;
-            setTimeout(() => {
-                fondo.src = color.src;
-                fondo.style.opacity = 1;
-            }, 300);
-        }
-    </script> -->
-
-    <!-- <script>
-        let formasYLargos; 
-        function inicializarMatrizMano(){
-            formasYLargos = new Array(3);
-            formasYLargos[0] = new Array("fondo-mesa-manicura/redondas/largo1.png", "fondo-mesa-manicura/redondas/largo2.png", "fondo-mesa-manicura/redondas/largo3.png");
-            formasYLargos[1] = new Array("fondo-mesa-manicura/cuadradas/largo1.png", "fondo-mesa-manicura/cuadradas/largo2.png", "fondo-mesa-manicura/cuadradas/largo3.png");
-            formasYLargos[2] = new Array("fondo-mesa-manicura/puntiagudas/largo1.png","fondo-mesa-manicura/puntiagudas/largo2.png","fondo-mesa-manicura/puntiagudas/largo3.png");
-        }   
-
-        function cambiarMano(nroForma, nroLargo){
-            fondo =document.getElementById("mano"); 
-            fondo.src = formasYLargos[nroForma][nroLargo]; 
-        }
-
-        //inicializar la matriz con los largos y formas 
-        inicializarMatrizMano(); 
-        cambiarMano(0,0);
-    </script> -->
+    
 </body>
 </html>
