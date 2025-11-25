@@ -3,42 +3,80 @@
   const fondo = document.getElementById('fondo');
   const mano = document.getElementById('mano');
 
-  // Cargar colores desde el archivo JSON 
-  fetch('./colores.json') // Promesa
-    .then(res => {
-      if (!res.ok) throw new Error('No se pudo cargar colores.json');
-      return res.json();
-    })
-    .then(data => {
-      
-      const colores = data.colores;
+  // === PAGINACIÓN DE COLORES DESDE LA API ===
+  const CANTIDAD_POR_PAGINA = 3;  // cuántos colores pedir por página
+  let offset = 0; // from actual
 
-      // Limpiamos el contenido previo del div
-      paleta.innerHTML = '';
+  // Creamos el botón "Ver más colores" dentro de la paleta
+  const btnMasColores = document.createElement('button');
+  btnMasColores.id = 'btnMasColores';
+  btnMasColores.className = 'btn-mas-colores';
+  btnMasColores.textContent = 'Ver más colores';
+  // Lo agregamos al final de la paleta (después irán los colores antes del botón)
+  paleta.appendChild(btnMasColores);
 
-      // Creamos cada miniatura de color
-      colores.forEach(({ id, src }) => {
-        const img = document.createElement('img');
-        img.id = id;
-        img.src = src;
-        img.className = 'imagenColor';
+  // Creamos un <img> miniatura para un color y agregamos el evento de click
+  function crearMiniaturaColor(color) {
+    const img = document.createElement('img');
+    img.id = color.id;
+    img.src = color.src;
+    img.className = 'imagenColor';
 
-        // Cuando se hace click, cambia el fondo con un efecto suave
-        img.addEventListener('click', () => {
-          fondo.style.opacity = 0;
-          setTimeout(() => {
-            fondo.src = img.src;
-            fondo.style.opacity = 1;
-          }, 300);
-        });
+    // Cuando se hace click, cambia el fondo con un efecto suave
+    img.addEventListener('click', () => {
+      fondo.style.opacity = 0;
+      setTimeout(() => {
+        fondo.src = img.src;
+        fondo.style.opacity = 1;
+      }, 300);
+    });
 
-        paleta.appendChild(img);
+    return img;
+  }
+
+  // Traemos una página de colores desde la API y los agregamos a la paleta
+  async function cargarColores() {
+    try {
+      const res = await fetch(
+        `/api/colores?cantidad=${CANTIDAD_POR_PAGINA}&from=${offset}`
+      );
+      if (!res.ok) {
+        throw new Error('No se pudo cargar colores desde la API');
+      }
+
+      const data = await res.json(); // esperamos un array de colores
+
+      if (!Array.isArray(data)) {
+        throw new Error('Respuesta inesperada de la API de colores');
+      }
+
+      // Si no vienen más colores, deshabilitamos el botón
+      if (data.length === 0) {
+        btnMasColores.disabled = true;
+        btnMasColores.textContent = 'No hay más colores';
+        return;
+      }
+
+      // Insertamos cada color antes del botón (para que el botón quede siempre al final)
+      data.forEach((color) => {
+        const img = crearMiniaturaColor(color);
+        paleta.insertBefore(img, btnMasColores);
       });
 
-    })
-    .catch(err => console.error('Error al cargar el JSON:', err));
+      // Actualizamos el offset para la próxima página
+      offset += data.length;
+    } catch (err) {
+      console.error('Error al cargar los colores:', err);
+    }
+  }
 
-  // Matriz de formas y largos de uñas
+  // Primera carga de colores
+  cargarColores();
+
+  // Cuando se hace click en "Ver más colores", pedimos la siguiente página
+  btnMasColores.addEventListener('click', cargarColores);
+
+  // === MATRIZ DE FORMAS Y LARGOS DE UÑAS ===
   let formasYLargos;
 
   function inicializarMatrizMano() {
@@ -71,17 +109,18 @@
     window.cambiarMano(0, 0);
   });
 
-  // Botón de reset, sin setTimeout y con async y await?
-const btnReset = document.getElementById('btnReset');
-btnReset.addEventListener('click', () => {
-  // Restaurar el color de fondo al inicial
-  fondo.style.opacity = 0;
-  setTimeout(() => {
-    fondo.src = 'https://images-ext-1.discordapp.net/external/4hw6z4JvhIpaLXqrZYKb5uWH_ZPD6sXKtyQgwz9y8YA/%3Fq%3Dtbn%3AANd9GcRQrephGiUfNcRkBeyB9R10_Qya5Jl99Iqe_w%26s/https/encrypted-tbn0.gstatic.com/images?format=webp&width=293&height=293';
-    fondo.style.opacity = 1;
-  }, 300);
+  // === BOTÓN DE RESET DEL DISEÑO ===
+  const btnReset = document.getElementById('btnReset');
+  btnReset.addEventListener('click', () => {
+    // Restaurar el color de fondo al inicial
+    fondo.style.opacity = 0;
+    setTimeout(() => {
+      fondo.src =
+        'https://images-ext-1.discordapp.net/external/4hw6z4JvhIpaLXqrZYKb5uWH_ZPD6sXKtyQgwz9y8YA/%3Fq%3Dtbn%3AANd9GcRQrephGiUfNcRkBeyB9R10_Qya5Jl99Iqe_w%26s/https/encrypted-tbn0.gstatic.com/images?format=webp&width=293&height=293';
+      fondo.style.opacity = 1;
+    }, 300);
 
-  // Restaurar la mano a la opción inicial (0, 0)
-  cambiarMano(0, 0);
-});
+    // Restaurar la mano a la opción inicial (0, 0)
+    cambiarMano(0, 0);
+  });
 })();

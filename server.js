@@ -1,44 +1,175 @@
 // server.js
-const express = require('express'); // Importa el framework Express
-const path = require('path'); // Módulo para manejar rutas de archivos
-const fs = require('fs').promises; // Módulo para manejar el sistema de archivos con promesas
+const express = require('express');
+const path = require('path');
+const fs = require('fs').promises;
 
 // Parámetros del servidor
 const host = 'localhost';
 const port = 3030;
 
-const app = express(); // Crea una instancia de la aplicación Express
+const app = express();
 
-/* Servir todo lo estático de /public: 
-  Si el navegador pide cualquier archivo (HTML, CSS, JS, imagen, ...) 
-  que exista dentro de la carpeta public, entregáselo automáticamente
+app.use(express.json());
+
+/*
+  Cargamos la paleta inicial desde data/colores.json al iniciar el servidor.
+  Se guarda en memoria y luego los endpoints trabajan sobre ese array.
+*/
+let colores = [];
+
+(async () => {
+  try {
+    const dataPath = path.join(__dirname, 'data', 'colores.json');
+    const fileContent = await fs.readFile(dataPath, 'utf8');
+    const data = JSON.parse(fileContent);
+    colores = data.colores || [];
+    console.log(`Paleta inicial cargada: ${colores.length} colores.`);
+  } catch (err) {
+    console.error('No se pudo cargar colores.json al iniciar:', err);
+  }
+})();
+
+/* ====== ENDPOINTS API ====== */
+
+/*
+  GET /api/colores?cantidad=10&from=0
+  Devuelve una "página" de colores con paginación.
+  Valida que cantidad y from sean enteros válidos.
+*/
+app.get('/api/colores', (req, res) => {
+  // Valores por defecto si no vienen en la query
+  let { cantidad = '10', from = '0' } = req.query;
+
+  const cantidadNum = parseInt(cantidad, 10);
+  const fromNum = parseInt(from, 10);
+
+  // Validación de entrada
+  if (
+    Number.isNaN(cantidadNum) ||
+    Number.isNaN(fromNum) ||
+    cantidadNum <= 0 ||
+    fromNum < 0
+  ) {
+    return res.status(400).json({
+      error:
+        'Los parámetros "cantidad" y "from" deben ser enteros válidos (cantidad > 0, from >= 0).',
+    });
+  }
+
+  const slice = colores.slice(fromNum, fromNum + cantidadNum);
+  return res.json(slice); // devolvemos solo el array de colores
+});
+
+/*
+  GET /api/colores/:id
+  Devuelve un solo color por id.
+  Si no existe, responde 404.
+*/
+app.get('/api/colores/:id', (req, res) => {
+  const { id } = req.params;
+  const color = colores.find((c) => c.id === id);
+
+  if (!color) {
+    return res
+      .status(404)
+      .json({ error: `No se encontró un color con id "${id}".` });
+  }
+
+  return res.json(color);
+});
+
+/*
+  POST /api/colores
+  Crea un nuevo color.
+  Valida que vengan "id" y "src" como string; si falta algo o es inválido, 400.
+*/
+app.post('/api/colores', (req, res) => {
+  const { id, src } = req.body;
+
+  if (typeof id !== 'string' || !id.trim()) {
+    return res
+      .status(400)
+      .json({ error: 'El campo "id" es obligatorio y debe ser string.' });
+  }
+
+  if (typeof src !== 'string' || !src.trim()) {
+    return res
+      .status(400)
+      .json({ error: 'El campo "src" es obligatorio y debe ser string.' });
+  }
+
+  // Validar que no se repita el id
+  if (colores.some((c) => c.id === id)) {
+    return res
+      .status(400)
+      .json({ error: `Ya existe un color con id "${id}".` });
+  }
+
+  const nuevoColor = { id: id.trim(), src: src.trim() };
+  colores.push(nuevoColor);
+
+  return res.status(201).json(nuevoColor);
+});
+
+/*
+  PUT /api/colores/:id
+  Actualiza el "src" de un color existente.
+  Valida que venga un "src" string; si falta algo, 400.
+  Si no existe el color, 404.
+*/
+app.put('/api/colores/:id', (req, res) => {
+  const { id } = req.params;
+  const { src } = req.body;
+
+  if (typeof src !== 'string' || !src.trim()) {
+    return res
+      .status(400)
+      .json({ error: 'El campo "src" es obligatorio y debe ser string.' });
+  }
+
+  const color = colores.find((c) => c.id === id);
+  if (!color) {
+    return res
+      .status(404)
+      .json({ error: `No se encontró un color con id "${id}".` });
+  }
+
+  color.src = src.trim();
+  return res.json(color);
+});
+
+/* ====== SERVIR ARCHIVOS ESTÁTICOS DEL TPO2 ====== */
+
+/*
+  Servir todo lo estático de /public:
+  HTML, CSS, JS, imágenes, etc.
 */
 app.use(express.static(path.join(__dirname, 'public')));
 
-/* Endpoint (ruta) para enviar el JSON que está en /data
-  Cuando el navegador pide '/colores.json', el servidor busca el archivo
-  'data/colores.json', lo lee y lo envía como respuesta. */
-app.get('/colores.json', async (req, res) => {
-  try {
-    const dataPath = path.join(__dirname, 'data', 'colores.json');  // Ruta completa al archivo colores.json
-    const fileContent = await fs.readFile(dataPath, 'utf8');  // Se lee el contenido del archivo como texto (utf8)
-    const data = JSON.parse(fileContent); // Convierto el .json (texto) a un objeto de JavaScript
-    res.json(data); // Envío el objeto como respuesta en formato JSON
-  } catch (err) {
-    /* Si ocurre un error (archivo no encontrado o JSON mal formado),
-      se muestra el error en la consola del servidor y enviamos un mensaje de error al cliente */
-    console.error('Error leyendo colores.json:', err);
-    res.status(500).json({ error: 'No se pudo leer la paleta de colores' });  // Error 50500: Error interno del servidor
-  }
-});
-
-// Defino la ruta principal: Página principal que está dentro de public 
+/*
+  Ruta principal: página inicial de la app.
+*/
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'paginaPrincipal.html'));
 });
 
+/*
+  Opcional: mantener el endpoint viejo /colores.json por compatibilidad,
+  aunque el front nuevo ya NO lo usa.
+*/
+app.get('/colores.json', async (req, res) => {
+  try {
+    const dataPath = path.join(__dirname, 'data', 'colores.json');
+    const fileContent = await fs.readFile(dataPath, 'utf8');
+    const data = JSON.parse(fileContent);
+    res.json(data);
+  } catch (err) {
+    console.error('Error leyendo colores.json:', err);
+    res.status(500).json({ error: 'No se pudo leer la paleta de colores' });
+  }
+});
+
 // Levantar el server
-// El usuario entra a http://localhost:3030/ 
 app.listen(port, host, () => {
   console.log(`Servidor levantado en http://${host}:${port}`);
 });
