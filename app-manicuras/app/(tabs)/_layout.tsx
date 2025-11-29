@@ -18,9 +18,9 @@ export default function TabLayout() {
             }}>
             <Tabs.Screen name="index"
                 options={{
-                    title: 'Home',
+                    title: '¡Diseña tus uñas!',
                     tabBarIcon: ({ color, focused }) => (
-                        <Ionicons name={focused ? 'home-sharp' : 'home-outline'} color={color} size={24} />
+                        <Ionicons name={focused ? 'hand-right' : 'hand-right-outline'} color={color} size={24} />
                     )
                 }}
             />

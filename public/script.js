@@ -3,7 +3,7 @@
   const fondo = document.getElementById('fondo');
   const mano = document.getElementById('mano');
 
-  // === PAGINACIÓN DE COLORES DESDE LA API ===
+  // PAGINACIÓN DE COLORES DESDE LA API
   const CANTIDAD_POR_PAGINA = 3;  // cuántos colores pedir por página
   let offset = 0; // from actual
 

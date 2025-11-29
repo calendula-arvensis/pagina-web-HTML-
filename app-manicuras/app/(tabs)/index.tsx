@@ -10,7 +10,7 @@ export default function Index() {
     <View
       style={styles.container}
     >
-      <View>
+      <View style={styles.imageContainer}>
         <ImageViewer imgSource={PlaceholderImage}/>
       </View>
       {/* <Text>Hello world!</Text>

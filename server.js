@@ -29,11 +29,11 @@ let colores = [];
   }
 })();
 
-/* ====== ENDPOINTS API ====== */
+/* ENDPOINTS API  */
 
 /*
   GET /api/colores?cantidad=10&from=0
-  Devuelve una "página" de colores con paginación.
+  Devuelve una colores con paginación.
   Valida que cantidad y from sean enteros válidos.
 */
 app.get('/api/colores', (req, res) => {
