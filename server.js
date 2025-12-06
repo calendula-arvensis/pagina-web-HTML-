@@ -1,15 +1,17 @@
-// server.js
 const express = require('express');
 const path = require('path');
 const fs = require('fs').promises;
+const cors = require('cors');
+require('dotenv').config();
 
-// Parámetros del servidor
-const host = 'localhost';
-const port = 3030;
+// Puerto del servidor: Render setea process.env.PORT
+const PORT = process.env.PORT || 3030;
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
+
 
 /*
   Cargamos la paleta inicial desde data/colores.json al iniciar el servidor.
@@ -170,6 +172,7 @@ app.get('/colores.json', async (req, res) => {
 });
 
 // Levantar el server
-app.listen(port, host, () => {
-  console.log(`Servidor levantado en http://${host}:${port}`);
+app.listen(PORT, () => {
+  console.log(`Servidor levantado en el puerto ${PORT}`);
 });
+
