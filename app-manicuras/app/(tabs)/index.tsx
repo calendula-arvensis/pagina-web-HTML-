@@ -2,34 +2,26 @@ import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
-  FlatList,
-  TouchableOpacity,
-  Image,
-  ActivityIndicator,
   Text,
+  ActivityIndicator,
   ImageSourcePropType,
 } from "react-native";
 import ImageViewer from "@/components/ImageViewer";
+import ColorPalette, { Color } from "@/components/ColorPalette";
 
-// ----- Tipos de datos -----
-type Color = {
-  id: string;
-  src: string; // ej: "colores/img1.jpg"
-};
+// URL base del backend
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL ?? "";
 
+// ----- Tipos para la respuesta inicial -----
 type ColorsResponse = {
   colores: Color[];
 };
 
-// URL base del backend (Render o local), viene de app-manicuras/.env
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL ?? "";
-
-// ----- Matriz de formas y largos (versión React Native) -----
-// Equivalente a formasYLargos del script.js, pero con require estático.
+// ----- Matriz de formas y largos -----
 type HandVariant = {
   shapeKey: string;
   label: string;
-  images: ImageSourcePropType[]; // largo1, largo2, largo3
+  images: ImageSourcePropType[];
 };
 
 const HAND_VARIANTS: HandVariant[] = [
@@ -62,7 +54,6 @@ const HAND_VARIANTS: HandVariant[] = [
   },
 ];
 
-// etiquetas para los largos (columnas)
 const LENGTH_LABELS = ["Corto", "Medio", "Largo"];
 
 export default function Index() {
@@ -70,14 +61,12 @@ export default function Index() {
   const [selectedColorId, setSelectedColorId] = useState<string | null>(null);
   const [selectedColorUri, setSelectedColorUri] = useState<string | null>(null);
 
-  // índices de la mano (forma y largo)
-  const [shapeIndex, setShapeIndex] = useState<number>(0); // 0 = redondas
-  const [lengthIndex, setLengthIndex] = useState<number>(0); // 0 = corto
+  const [shapeIndex, setShapeIndex] = useState<number>(0);
+  const [lengthIndex, setLengthIndex] = useState<number>(0);
 
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // Imagen actual de la mano (mesa + dedos) según forma y largo
   const currentHandImage: ImageSourcePropType =
     HAND_VARIANTS[shapeIndex].images[lengthIndex];
 
@@ -113,6 +102,15 @@ export default function Index() {
     loadColors();
   }, []);
 
+  const handleSelectColor = (color: Color) => {
+    setSelectedColorId(color.id);
+    setSelectedColorUri(`${API_BASE_URL}/${color.src}`);
+  };
+
+  const handleColorsChange = (newColors: Color[]) => {
+    setColors(newColors);
+  };
+
   if (loading) {
     return (
       <View style={[styles.container, styles.center]}>
@@ -123,31 +121,31 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      {/* ZONA DE IMÁGENES SUPERPUESTAS */}
+      {/* IMÁGENES SUPERPUESTAS */}
       <View style={styles.imageContainer}>
-        {/* 1) Color (uñas) - capa de fondo (viene de la API) */}
+        {/* 1) Color de uñas (fondo) */}
         {selectedColorUri && (
           <ImageViewer imgSource={{ uri: selectedColorUri }} />
         )}
 
-        {/* 2) Mano/mesa (forma + largo) - capa superior (estática por require) */}
+        {/* 2) Mano + mesa (forma + largo) */}
         <ImageViewer imgSource={currentHandImage} />
       </View>
 
-      {/* BOTONES DE FORMAS Y LARGOS */}
+      {/* CONTROLES DE FORMA Y LARGO */}
       <View style={styles.handControlsContainer}>
         <Text style={styles.sectionTitle}>Forma de uñas</Text>
         <View style={styles.row}>
-          {HAND_VARIANTS.map((variant, index) => {
-            const selected = index === shapeIndex;
+          {HAND_VARIANTS.map((variant, idx) => {
+            const selected = idx === shapeIndex;
             return (
-              <TouchableOpacity
+              <Text
                 key={variant.shapeKey}
                 style={[
                   styles.optionButton,
                   selected && styles.optionButtonSelected,
                 ]}
-                onPress={() => setShapeIndex(index)}
+                onPress={() => setShapeIndex(idx)}
               >
                 <Text
                   style={[
@@ -157,23 +155,23 @@ export default function Index() {
                 >
                   {variant.label}
                 </Text>
-              </TouchableOpacity>
+              </Text>
             );
           })}
         </View>
 
         <Text style={styles.sectionTitle}>Largo</Text>
         <View style={styles.row}>
-          {LENGTH_LABELS.map((label, index) => {
-            const selected = index === lengthIndex;
+          {LENGTH_LABELS.map((label, idx) => {
+            const selected = idx === lengthIndex;
             return (
-              <TouchableOpacity
+              <Text
                 key={label}
                 style={[
                   styles.optionButton,
                   selected && styles.optionButtonSelected,
                 ]}
-                onPress={() => setLengthIndex(index)}
+                onPress={() => setLengthIndex(idx)}
               >
                 <Text
                   style={[
@@ -183,42 +181,22 @@ export default function Index() {
                 >
                   {label}
                 </Text>
-              </TouchableOpacity>
+              </Text>
             );
           })}
         </View>
       </View>
 
-      {/* PALETA DE COLORES */}
+      {/* PALETA DE COLORES + BOTÓN + */}
       <View style={styles.paletteContainer}>
         {errorMsg && <Text style={styles.errorText}>{errorMsg}</Text>}
 
-        <FlatList
-          data={colors}
-          horizontal
-          keyExtractor={(item) => item.id}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.paletteContent}
-          renderItem={({ item }) => {
-            const fullUri = `${API_BASE_URL}/${item.src}`;
-            const isSelected = item.id === selectedColorId;
-
-            return (
-              <TouchableOpacity
-                style={[
-                  styles.colorButton,
-                  isSelected && styles.colorButtonSelected,
-                ]}
-                onPress={() => {
-                  setSelectedColorId(item.id);
-                  setSelectedColorUri(fullUri);
-                }}
-                activeOpacity={0.8}
-              >
-                <Image source={{ uri: fullUri }} style={styles.colorThumbnail} />
-              </TouchableOpacity>
-            );
-          }}
+        <ColorPalette
+          colors={colors}
+          selectedColorId={selectedColorId}
+          apiBaseUrl={API_BASE_URL}
+          onSelectColor={handleSelectColor}
+          onColorsChange={handleColorsChange}
         />
       </View>
     </View>
@@ -278,28 +256,6 @@ const styles = StyleSheet.create({
   paletteContainer: {
     paddingVertical: 16,
     marginBottom: 32,
-  },
-  paletteContent: {
-    paddingHorizontal: 16,
-  },
-  colorButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginRight: 12,
-    borderWidth: 2,
-    borderColor: "#ffffff88",
-    overflow: "hidden",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  colorButtonSelected: {
-    borderColor: "#ffffff",
-    borderWidth: 3,
-  },
-  colorThumbnail: {
-    width: "100%",
-    height: "100%",
   },
   errorText: {
     color: "#fff",
