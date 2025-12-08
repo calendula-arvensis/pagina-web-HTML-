@@ -34,7 +34,6 @@ const PREDEFINED_COLORS: PredefinedColor[] = [
   { key: "fucsia", label: "Fucsia", src: "colores/fucsia.png" },
   { key: "naranja", label: "Naranja", src: "colores/naranja.png" },
   { key: "verde", label: "Verde", src: "colores/verde.png" },
-
 ];
 
 const ADD_BUTTON_ID = "__add_button__";
@@ -49,6 +48,11 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
   const [showModal, setShowModal] = useState(false);
   const [adding, setAdding] = useState(false);
 
+  // Colores predefinidos que TODAVÍA no están en la paleta (no duplicar por src)
+  const availablePredefs: PredefinedColor[] = PREDEFINED_COLORS.filter(
+    (predef) => !colors.some((c) => c.src === predef.src)
+  );
+
   // Mezclamos colores + botón +
   const dataWithAdd = [
     ...colors,
@@ -56,13 +60,18 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
   ];
 
   const handleChoosePredefined = async (predef: PredefinedColor) => {
+    // Si por algún motivo ya existe (race condition), no lo agregamos de nuevo
+    if (colors.some((c) => c.src === predef.src)) {
+      setShowModal(false);
+      return;
+    }
+
     try {
       setAdding(true);
 
-      // id único para este nuevo color
       const newColorToSend: Color = {
         id: `predef-${predef.key}-${Date.now()}`,
-        src: predef.src, // la imagen ya existe en el backend
+        src: predef.src,
       };
 
       const res = await fetch(`${apiBaseUrl}/api/colores`, {
@@ -77,8 +86,8 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
       }
 
       const savedColor: Color = await res.json();
-
       const updated = [...colors, savedColor];
+
       onColorsChange(updated);
       onSelectColor(savedColor);
       setShowModal(false);
@@ -147,8 +156,15 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
               </View>
             )}
 
+            {!adding && availablePredefs.length === 0 && (
+              <Text style={styles.modalInfo}>
+                Ya agregaste todos los colores disponibles.
+              </Text>
+            )}
+
             {!adding &&
-              PREDEFINED_COLORS.map((predef) => {
+              availablePredefs.length > 0 &&
+              availablePredefs.map((predef) => {
                 const previewUri = `${apiBaseUrl}/${predef.src}`;
                 return (
                   <TouchableOpacity
@@ -169,7 +185,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
               style={styles.modalCloseButton}
               onPress={() => !adding && setShowModal(false)}
             >
-              <Text style={styles.modalCloseText}>Cancelar</Text>
+              <Text style={styles.modalCloseText}>Cerrar</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -235,6 +251,11 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginBottom: 12,
     textAlign: "center",
+  },
+  modalInfo: {
+    textAlign: "center",
+    marginVertical: 16,
+    fontSize: 14,
   },
   predefRow: {
     flexDirection: "row",
