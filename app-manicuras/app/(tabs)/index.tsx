@@ -5,8 +5,9 @@ import {
   Text,
   ActivityIndicator,
 } from "react-native"
-import ColorPalette, { Color } from "@/components/ColorPalette"
+import ColorPalette from "@/components/ColorPalette"
 import HandLayer from "@/components/HandLayer"
+import type { Color } from "@/types/color"
 
 // URL base del backend
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL ?? ""
