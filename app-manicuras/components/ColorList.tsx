@@ -114,8 +114,9 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
   colorThumbnail: {
-    width: "100%",
-    height: "100%",
+    width: "90%",   
+    height: "90%",  
+    borderRadius: 9999,
   },
   colorFallback: {
     width: "100%",

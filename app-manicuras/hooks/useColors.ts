@@ -102,38 +102,15 @@ export const useColors = (): UseColorsResult => {
   const updateColors = (newColors: Color[]) => {
     setColors(newColors)
 
-    // Caso 5: la paleta queda vacía
     if (newColors.length === 0) {
+      // Paleta vacía
       setSelectedColorId(null)
       setSelectedColorUri(null)
       setErrorMsg("No hay colores en la paleta. Agregá uno con el botón +.")
-      return
-    }
-
-    // Si no hay color seleccionado, elegimos el primero
-    setSelectedColorId((prevSelectedId) => {
-      if (prevSelectedId && newColors.some((c) => c.id === prevSelectedId)) {
-        // El seleccionado anterior sigue existiendo: lo dejamos
-        const stillSelected = newColors.find((c) => c.id === prevSelectedId)!
-        if (isApiConfigured()) {
-          setSelectedColorUri(`${API_BASE_URL}/${stillSelected.src}`)
-        } else {
-          setSelectedColorUri(null)
-        }
-        setErrorMsg(null)
-        return prevSelectedId
-      }
-
-      // No había seleccionado o ya no existe → seleccionar el primero
-      const first = newColors[0]
-      if (isApiConfigured()) {
-        setSelectedColorUri(`${API_BASE_URL}/${first.src}`)
-      } else {
-        setSelectedColorUri(null)
-      }
+    } else {
+      // Hay colores, el seleccionado lo decide selectColor
       setErrorMsg(null)
-      return first.id
-    })
+    }
   }
 
   return {
