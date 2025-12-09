@@ -1,3 +1,4 @@
+// app-manicuras/components/HandLayer.tsx
 import React from "react"
 import { useHandSelection } from "@/hooks/useHandSelection"
 import HandPreview from "@/components/HandPreview"
@@ -10,9 +11,9 @@ type Props = {
 const HandLayer: React.FC<Props> = ({ selectedColorUri }) => {
   const {
     shapeKey,
-    lengthIndex,
+    lengthKey,
     setShapeKey,
-    setLengthIndex,
+    setLengthKey,
     currentHandImage,
   } = useHandSelection()
 
@@ -25,9 +26,9 @@ const HandLayer: React.FC<Props> = ({ selectedColorUri }) => {
 
       <HandControls
         shapeKey={shapeKey}
-        lengthIndex={lengthIndex}
+        lengthKey={lengthKey}
         onShapeChange={setShapeKey}
-        onLengthChange={setLengthIndex}
+        onLengthChange={setLengthKey}
       />
     </>
   )

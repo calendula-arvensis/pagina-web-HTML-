@@ -1,47 +1,84 @@
 // Lógica de forma/largo
 import { useState } from "react"
 import { ImageSourcePropType } from "react-native"
-import { HAND_VARIANTS, LENGTH_LABELS } from "@/constants/handVariants"
+import {
+  HAND_VARIANTS,
+  LENGTH_OPTIONS,
+  HandState,
+  LengthKey,
+} from "@/constants/handVariants"
 
+const getShapeIndex = (shapeKey: string): number => {
+  const idx = HAND_VARIANTS.findIndex((v) => v.shapeKey === shapeKey)
+  return idx >= 0 ? idx : 0
+}
+
+const getLengthIndex = (lengthKey: LengthKey): number => {
+  const idx = LENGTH_OPTIONS.findIndex((o) => o.key === lengthKey)
+  return idx >= 0 ? idx : 0
+}
+
+/**
+ * Hook que maneja el estado de la mano (forma + largo)
+ * usando HandState (shapeKey + lengthKey) y mapeando internamente
+ * a los índices de HAND_VARIANTS / LENGTH_OPTIONS.
+ */
 export const useHandSelection = () => {
-  // Usamos la key de la forma como estado principal
-  const [shapeKey, setShapeKeyState] = useState<string>(HAND_VARIANTS[0]?.shapeKey ?? "")
-  const [lengthIndex, setLengthIndexState] = useState(0)
+  const defaultShapeKey = HAND_VARIANTS[0]?.shapeKey ?? ""
+  const defaultLengthKey: LengthKey = "corto"
 
-  // Buscar el índice de la forma actual a partir del shapeKey
-  const shapeIndex = HAND_VARIANTS.findIndex((v) => v.shapeKey === shapeKey)
+  const [handState, setHandState] = useState<HandState>({
+    shape: defaultShapeKey,
+    length: defaultLengthKey,
+  })
 
-  // Si por algún motivo no se encuentra, usamos 0 como fallback
-  const safeShapeIndex = shapeIndex >= 0 ? shapeIndex : 0
+  const shapeIndex = getShapeIndex(handState.shape)
+  const lengthIndex = getLengthIndex(handState.length)
 
   const currentHandImage: ImageSourcePropType =
-    HAND_VARIANTS[safeShapeIndex].images[lengthIndex]
+    HAND_VARIANTS[shapeIndex].images[lengthIndex]
 
-  const setShapeKey = (nextKey: string) => {
-    const nextIndex = HAND_VARIANTS.findIndex((v) => v.shapeKey === nextKey)
-    if (nextIndex === -1) return // key inválida, no hacemos nada
+  const setShapeKey = (nextShapeKey: string) => {
+    const nextIndex = HAND_VARIANTS.findIndex((v) => v.shapeKey === nextShapeKey)
+    if (nextIndex === -1) return
 
-    setShapeKeyState(nextKey)
+    const currentLengthIndex = getLengthIndex(handState.length)
+    const max = HAND_VARIANTS[nextIndex].images.length
 
-    // Ajustar el largo para que siga siendo válido para la nueva forma
-    setLengthIndexState((prev) => {
-      const max = HAND_VARIANTS[nextIndex].images.length
-      if (max === 0) return 0
-      return prev < max ? prev : max - 1
+    const safeLengthIndex =
+      max > 0 ? (currentLengthIndex < max ? currentLengthIndex : max - 1) : 0
+
+    const nextLengthKey = LENGTH_OPTIONS[safeLengthIndex].key
+
+    setHandState({
+      shape: nextShapeKey,
+      length: nextLengthKey,
     })
   }
 
-  const setLengthIndex = (idx: number) => {
-    if (idx < 0 || idx >= LENGTH_LABELS.length) return
-    setLengthIndexState(idx)
+  const setLengthKey = (nextLengthKey: LengthKey) => {
+    const idx = LENGTH_OPTIONS.findIndex((o) => o.key === nextLengthKey)
+    if (idx === -1) return
+
+    const shapeIdx = getShapeIndex(handState.shape)
+    const max = HAND_VARIANTS[shapeIdx].images.length
+    if (idx >= max) return
+
+    setHandState((prev) => ({
+      ...prev,
+      length: nextLengthKey,
+    }))
   }
 
   return {
-    shapeKey,
-    shapeIndex: safeShapeIndex,
+    handState,
+    shapeKey: handState.shape,
+    lengthKey: handState.length,
+    shapeIndex,
     lengthIndex,
     setShapeKey,
-    setLengthIndex,
+    setLengthKey,
+    setHandState,
     currentHandImage,
   }
 }

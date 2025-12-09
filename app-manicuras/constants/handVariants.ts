@@ -8,7 +8,7 @@ export type HandVariant = {
 
 /**
  * Matriz de formas de uñas y sus imágenes por largo.
- * Orden de images: [Corto, Medio, Largo]
+ * Orden de images: [corto, medio, largo]
  */
 export const HAND_VARIANTS: HandVariant[] = [
   {
@@ -40,8 +40,27 @@ export const HAND_VARIANTS: HandVariant[] = [
   },
 ]
 
-export const LENGTH_LABELS = ["Corto", "Medio", "Largo"] as const
-export type LengthLabel = (typeof LENGTH_LABELS)[number]
+// ---- Largos por key ----
+
+export const LENGTH_KEYS = ["corto", "medio", "largo"] as const
+export type LengthKey = (typeof LENGTH_KEYS)[number]
+
+export type LengthOption = {
+  key: LengthKey
+  label: string
+}
+
+/**
+ * Opciones de largo que se muestran en la UI.
+ * Orden: corto, medio, largo
+ */
+export const LENGTH_OPTIONS: LengthOption[] = [
+  { key: "corto", label: "Corto" },
+  { key: "medio", label: "Medio" },
+  { key: "largo", label: "Largo" },
+]
+
+// ---- Opciones de forma para la UI ----
 
 export type ShapeOption = {
   key: string
@@ -49,9 +68,16 @@ export type ShapeOption = {
 }
 
 /**
- * Opciones de forma para usar directamente en la UI.
+ * Opciones de forma derivadas de HAND_VARIANTS, para usar en la UI.
  */
 export const SHAPE_OPTIONS: ShapeOption[] = HAND_VARIANTS.map((v) => ({
   key: v.shapeKey,
   label: v.label,
 }))
+
+// ---- Estado de la mano ----
+
+export type HandState = {
+  shape: string // shapeKey de HAND_VARIANTS
+  length: LengthKey
+}
