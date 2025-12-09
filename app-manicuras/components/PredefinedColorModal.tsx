@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import {
   View,
   Text,
@@ -7,17 +7,17 @@ import {
   TouchableOpacity,
   Modal,
   ActivityIndicator,
-} from "react-native";
-import { PredefinedColor } from "@/constants/predefinedColors";
+} from "react-native"
+import { PredefinedColor } from "@/constants/predefinedColors"
 
 type Props = {
-  visible: boolean;
-  loading: boolean;
-  availablePredefs: PredefinedColor[];
-  apiBaseUrl: string;
-  onSelect: (predef: PredefinedColor) => void;
-  onClose: () => void;
-};
+  visible: boolean
+  loading: boolean
+  availablePredefs: PredefinedColor[]
+  apiBaseUrl: string
+  onSelect: (predef: PredefinedColor) => void
+  onClose: () => void
+}
 
 const PredefinedColorModal: React.FC<Props> = ({
   visible,
@@ -41,7 +41,7 @@ const PredefinedColorModal: React.FC<Props> = ({
           {loading && (
             <View style={styles.modalLoading}>
               <ActivityIndicator />
-              <Text style={styles.modalLoadingText}>Agregando...</Text>
+              <Text style={styles.modalLoadingText}>Agregando.</Text>
             </View>
           )}
 
@@ -54,17 +54,27 @@ const PredefinedColorModal: React.FC<Props> = ({
           {!loading &&
             availablePredefs.length > 0 &&
             availablePredefs.map((predef) => {
-              const previewUri = `${apiBaseUrl}/${predef.src}`;
+              const previewUri = `${apiBaseUrl}/${predef.src}`
               return (
                 <TouchableOpacity
                   key={predef.key}
                   style={styles.predefRow}
                   onPress={() => onSelect(predef)}
                 >
-                  <Image source={{ uri: previewUri }} style={styles.predefThumbnail} />
+                  <Image
+                    source={{ uri: previewUri }}
+                    style={styles.predefThumbnail}
+                    onError={(e) => {
+                      console.error(
+                        "Error cargando miniatura de color predefinido:",
+                        previewUri,
+                        e?.nativeEvent,
+                      )
+                    }}
+                  />
                   <Text style={styles.predefLabel}>{predef.label}</Text>
                 </TouchableOpacity>
-              );
+              )
             })}
 
           <TouchableOpacity style={styles.modalCloseButton} onPress={onClose}>
@@ -73,8 +83,8 @@ const PredefinedColorModal: React.FC<Props> = ({
         </View>
       </View>
     </Modal>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   modalOverlay: {

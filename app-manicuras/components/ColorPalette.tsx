@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet } from "react-native"
+import { StyleSheet, View, Text } from "react-native"
 
 import ColorList from "@/components/ColorList"
 import PredefinedColorModal from "@/components/PredefinedColorModal"
@@ -24,6 +24,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
   const {
     showModal,
     adding,
+    errorMsg,
     availablePredefs,
     openModal,
     closeModal,
@@ -37,15 +38,21 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
 
   return (
     <>
-      <ColorList
-        colors={colors}
-        selectedColorId={selectedColorId}
-        apiBaseUrl={apiBaseUrl}
-        onSelectColor={onSelectColor}
-        onPressAdd={openModal}
-        contentContainerStyle={styles.paletteContent}
-      />
+      {/* Zona de paleta + mensaje de error local */}
+      <View style={styles.paletteWrapper}>
+        {errorMsg && <Text style={styles.errorText}>{errorMsg}</Text>}
 
+        <ColorList
+          colors={colors}
+          selectedColorId={selectedColorId}
+          apiBaseUrl={apiBaseUrl}
+          onSelectColor={onSelectColor}
+          onPressAdd={openModal}
+          contentContainerStyle={styles.paletteContent}
+        />
+      </View>
+
+      {/* Modal de colores predefinidos */}
       <PredefinedColorModal
         visible={showModal}
         loading={adding}
@@ -59,8 +66,17 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
 }
 
 const styles = StyleSheet.create({
+  paletteWrapper: {
+    paddingVertical: 0,
+  },
   paletteContent: {
     paddingHorizontal: 16,
+  },
+  errorText: {
+    color: "#fff",
+    textAlign: "center",
+    marginBottom: 4,
+    fontSize: 12,
   },
 })
 

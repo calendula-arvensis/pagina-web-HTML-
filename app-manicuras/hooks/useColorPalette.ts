@@ -21,6 +21,7 @@ export const useColorPalette = ({
 }: UseColorPaletteParams) => {
   const [showModal, setShowModal] = useState(false)
   const [adding, setAdding] = useState(false)
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
   const availablePredefs: PredefinedColor[] = useMemo(
     () =>
@@ -30,20 +31,25 @@ export const useColorPalette = ({
     [colors],
   )
 
-  const openModal = () => setShowModal(true)
+  const openModal = () => {
+    setErrorMsg(null) // al abrir el modal limpiamos errores previos de la paleta
+    setShowModal(true)
+  }
 
   const closeModal = () => {
     if (!adding) setShowModal(false)
   }
 
   const handleAddPredefined = async (predef: PredefinedColor) => {
+    // Si por alguna razón ya está, cerramos modal y no hacemos nada
     if (colors.some((c) => c.src === predef.src)) {
       setShowModal(false)
-      return
+      return;
     }
 
     try {
       setAdding(true)
+      setErrorMsg(null)
 
       const savedColor = await addPredefinedColorToApi(predef, apiBaseUrl)
 
@@ -52,7 +58,9 @@ export const useColorPalette = ({
       onSelectColor(savedColor)
       setShowModal(false)
     } catch (err) {
-      console.error("Error agregando color predefinido:", err)
+      console.error("Error agregando color predefinido:", err)      
+      setErrorMsg("No se pudo agregar el color. Intentalo de nuevo.")      
+      setShowModal(false)
     } finally {
       setAdding(false)
     }
@@ -61,6 +69,7 @@ export const useColorPalette = ({
   return {
     showModal,
     adding,
+    errorMsg,
     availablePredefs,
     openModal,
     closeModal,

@@ -1,11 +1,13 @@
 // Renderiza la lista de colores y el botón de agregar color
-import React from "react"
+import React, { useState } from "react"
 import {
   FlatList,
   TouchableOpacity,
   Image,
   StyleSheet,
+  View,
   ViewStyle,
+  Text,
 } from "react-native"
 import AddColorButton from "@/components/AddColorButton"
 import type { Color } from "@/types/color"
@@ -20,6 +22,30 @@ type Props = {
 }
 
 const ADD_BUTTON_ID = "__add_button__"
+
+// Subcomponente que maneja error de carga de imagen
+const ColorThumbnail: React.FC<{ uri: string }> = ({ uri }) => {
+  const [failed, setFailed] = useState(false)
+
+  if (failed) {
+    return (
+      <View style={styles.colorFallback}>
+        <Text style={styles.colorFallbackText}>!</Text>
+      </View>
+    )
+  }
+
+  return (
+    <Image
+      source={{ uri }}
+      style={styles.colorThumbnail}
+      onError={(e) => {
+        console.error("Error cargando imagen de color:", uri, e?.nativeEvent)
+        setFailed(true)
+      }}
+    />
+  )
+}
 
 const ColorList: React.FC<Props> = ({
   colors,
@@ -51,7 +77,7 @@ const ColorList: React.FC<Props> = ({
         onPress={() => onSelectColor(item)}
         activeOpacity={0.8}
       >
-        <Image source={{ uri: fullUri }} style={styles.colorThumbnail} />
+        <ColorThumbnail uri={fullUri} />
       </TouchableOpacity>
     )
   }
@@ -90,6 +116,18 @@ const styles = StyleSheet.create({
   colorThumbnail: {
     width: "100%",
     height: "100%",
+  },
+  colorFallback: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ffcdd2",
+  },
+  colorFallbackText: {
+    color: "#b71c1c",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 })
 
